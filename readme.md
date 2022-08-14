@@ -1,5 +1,3 @@
-# Data in Paper Out
-
 A simple script implementing the training CNN (Pytorch) and deployment on the WWW (ONNX.js).
 
 
