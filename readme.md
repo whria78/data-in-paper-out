@@ -1,10 +1,13 @@
 # A simple script implementing the training CNN and deployment on the WWW.
 
-## Requirement
+## Runtime System Requirements
+Windows 10
+One or more of the CPU processors:
 
-![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-CPU
+### Supported CNN
+- MobileNet v2
+- EfficientNet Lite
 
 
 ## Screenshot
