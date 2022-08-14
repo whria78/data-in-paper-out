@@ -10,6 +10,13 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 - CPU processors (Intel or AMD)
 - Anaconda (https://www.anaconda.com/products/distribution)
 
+	![img](https://github.com/whria78/modelderm_rcnn_api/blob/img/download_anaconda.PNG)
+
+	![img](https://github.com/whria78/modelderm_rcnn_api/blob/img/ana1.PNG)
+
+	Please be sure to add the system PATH. 
+	
+	![img](https://github.com/whria78/modelderm_rcnn_api/blob/img/ana2.PNG)
 
 ### Supported CNN
 - MobileNet v2
