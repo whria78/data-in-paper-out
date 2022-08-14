@@ -22,8 +22,9 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 	
 	![img](https://github.com/whria78/modelderm_rcnn_api/raw/master/img/ana2.PNG)
 - Run "0. requirement.bat" to install the required libraries.
-- Run "1. train_mobilenet" if you want to train a CNN (MobileNet).
-- Run "2. run_demo_server", and then "3. connect_demo_server", to check the DEMO.
+    ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/00-1.PNG?raw=true)
+- Run "1. train_mobilenet.bat" if you want to train a CNN (MobileNet).
+- Run "2. run_demo_server.bat", and then "3. connect_demo_server.bat", to check the DEMO.
 
 ### Supported CNN
 - MobileNet v2
