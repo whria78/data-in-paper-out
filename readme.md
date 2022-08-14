@@ -29,6 +29,10 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/2.JPG?raw=true)
 
+![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/5.PNG?raw=true)
+
+![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/6.PNG?raw=true)
+
 
 ## Dataset for training, validation, and test
 
