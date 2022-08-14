@@ -14,7 +14,32 @@ var webapp=false;
 
 var old_html='';
 var onnx_session = {};
-var cnn_list=['model_eff_30e_0.onnx','model_mob_30e_0.onnx'];
+
+var cnn_list=null;
+var list_dx=null;
+
+function UrlExists(url)
+{
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status!=404;
+}
+if (UrlExists('model.onnx')==true)
+{
+	cnn_list=['model.onnx'];
+}
+else
+{
+	//default pretrained models
+	list_dx=["naildystrophy","onychomycosis"];
+	cnn_list=['model_eff_30e_0.onnx','model_mob_30e_0.onnx'];
+}
+</script>
+<script src="./dxinfo.js"></script>
+<script>
+console.log(list_dx);
+console.log(cnn_list);
 
 var img_orientation=-1;
 var cropit_loaded=false;
@@ -50,7 +75,6 @@ if (document.documentElement.clientWidth > 320) {
 <script defer src="https://cdn.jsdelivr.net/npm/onnxjs@0.1.8/dist/onnx.min.js"></script>
 
 <script defer src="./cropit.js"></script>
-<script defer src="./dxinfo.js"></script>
 
 <style>
 canvas {
