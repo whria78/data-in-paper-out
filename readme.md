@@ -8,7 +8,7 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 ### Runtime System Requirements
 - Windows
 - CPU processors (Intel or AMD)
-- Anaconda (https://www.anaconda.com/products/distribution)
+- Anaconda version 3.8 or newer (https://www.anaconda.com/products/distribution)
 
 	![img](https://github.com/whria78/modelderm_rcnn_api/raw/master/img/download_anaconda.PNG)
 
