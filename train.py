@@ -288,7 +288,7 @@ def main():
     try:os.makedirs(os.path.dirname(save_path))
     except:pass
 
-    torch.onnx.export(model, torch.autograd.Variable(torch.randn(1, 3, args.resolution, args.resolution)), save_path, verbose=False,opset_version=10)
+    torch.onnx.export(model, torch.autograd.Variable(torch.randn(1, 3, args.resolution, args.resolution).to(device)), save_path, verbose=False,opset_version=10)
     print("Export the ONNX model to : ",save_path)
     
         
