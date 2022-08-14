@@ -2,8 +2,8 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 
 
 ### Runtime System Requirements
-- Windows
-- CPU processors (Intel or AMD)
+- Windows (or Linux)
+- CPU processor (or GPU, CUDA)
 
 ### How to
 - Download the code
