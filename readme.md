@@ -1,12 +1,18 @@
 # A simple script implementing the training CNN and deployment on the WWW.
 
+## Requirement
+
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+
+CPU
 
 
 ## Screenshot
 
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/3.JPG?raw=true)
+
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/1.JPG?raw=true)
+
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/2.JPG?raw=true)
 
 
