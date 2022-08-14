@@ -10,7 +10,7 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 - CPU processors (Intel or AMD)
 
 ### How to
-- Download the codes
+- Download the code
     ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/00.PNG?raw=true)
 - Get Anaconda version 3.8 or newer (https://www.anaconda.com/products/distribution)
 
