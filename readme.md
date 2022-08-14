@@ -7,7 +7,8 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 
 ## Runtime System Requirements
 Windows 10
-One or more of the CPU processors:
+
+CPU processors
 
 
 ### Supported CNN
