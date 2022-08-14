@@ -39,6 +39,6 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 
 ## Dataset
 
-Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network
+Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network, PLOS One 2018
 
 https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0191493
