@@ -24,7 +24,7 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/2.JPG?raw=true)
 
 
-## Reference
+## Dataset for training, validation, and test
 
 Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network
 
