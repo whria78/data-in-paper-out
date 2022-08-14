@@ -8,7 +8,11 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 ### Runtime System Requirements
 - Windows
 - CPU processors (Intel or AMD)
-- Anaconda version 3.8 or newer (https://www.anaconda.com/products/distribution)
+
+### How to
+- Download the codes
+    ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/00.PNG?raw=true)
+- Get Anaconda version 3.8 or newer (https://www.anaconda.com/products/distribution)
 
 	![img](https://github.com/whria78/modelderm_rcnn_api/raw/master/img/download_anaconda.PNG)
 
@@ -17,6 +21,9 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 	Please be sure to add the system PATH. 
 	
 	![img](https://github.com/whria78/modelderm_rcnn_api/raw/master/img/ana2.PNG)
+- Run "0. requirement.bat"
+- Run "1. train_mobilenet" if you want to train a CNN (MobileNet).
+- Run "2. run_demo_server", and then "3. connect_demo_server", to check the DEMO.
 
 ### Supported CNN
 - MobileNet v2
