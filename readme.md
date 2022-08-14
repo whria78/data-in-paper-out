@@ -1,9 +1,12 @@
 Windows, CPU
+
 Train - WWW Deploy
 
 
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/3.JPG?raw=true)
+
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/1.JPG?raw=true)
+
 ![alt text](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/2.JPG?raw=true)
 
 
