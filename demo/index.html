@@ -287,17 +287,16 @@ function softmax(arr) {    return arr.map(function(value,index) {       return M
 async function run_onnx(img_data)
 {
     // preprocess the image data to match input dimension requirement, which is 1*3*224*224
-    const preprocessedData = preprocess(img_data, 224, 224);
-    const inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
-
+    preprocessedData = preprocess(img_data, 224, 224);
+    inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
 
     for (i=0;i<cnn_list.length;i++)
     {
         cnn_name=cnn_list[i];
         console.log("Running Start : ",cnn_name);
         // Run model with Tensor inputs and get the result.
-        const outputMap = await onnx_session[cnn_name].run([inputTensor]);
-        const outputData = outputMap.values().next().value;
+        outputMap = await onnx_session[cnn_name].run([inputTensor]);
+        outputData = outputMap.values().next().value;
         output_array.push(softmax(outputData.data));
         console.log(softmax(outputData.data));
         console.log("Running End : ",cnn_name);
@@ -361,15 +360,13 @@ async function init_onnx()
     onnx_session[cnn_name] = new onnx.InferenceSession({ backendHint: 'webgl' });
     await onnx_session[cnn_name].loadModel(cnn_name);
 
+    dims = [1, 3, 224, 224];
+    size = dims[0] * dims[1] * dims[2] * dims[3];
+    inputData = Float32Array.from({ length: size }, () => Math.random());
 
-    const dims = [1, 3, 224, 224];
-    const size = dims[0] * dims[1] * dims[2] * dims[3];
-    const inputData = Float32Array.from({ length: size }, () => Math.random());
-
-    const preprocessedData = preprocess(inputData, 224, 224);
-    const inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
-    // Run model with Tensor inputs and get the result.
-    const outputMap = await onnx_session[cnn_name].run([inputTensor]);
+    preprocessedData = preprocess(inputData, 224, 224);
+    inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
+    outputMap = await onnx_session[cnn_name].run([inputTensor]);
     
     console.log("Loading End : ",cnn_name);
     }
