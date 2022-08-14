@@ -1,12 +1,12 @@
 A simple script implementing the training CNN (Pytorch) and deployment on the WWW (ONNX.js).
 
 
-### Runtime System Requirements
+### Requirements
 - Windows (or Linux)
 - CPU processor (or GPU, CUDA)
 
 ### How to
-- Download the code
+- Download the code (ZIP)
     ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/00.PNG?raw=true)
 - Get Anaconda version 3.8 or newer (https://www.anaconda.com/products/distribution)
 
