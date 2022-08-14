@@ -1,0 +1,5 @@
+https://figshare.com/articles/dataset/Model_Onychomycosis_Training_Datasets_JPG_thumbnails_and_Validation_Datasets_JPG_images_/5398573?file=9302506
+
+TRAIN = D, E
+VAL = B2
+TEST = B1, C 

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" >
+<script>
+var total_analyze_crop_no=5;
+
+var old_html='';
+var onnx_session = null;
+
+var img_orientation=-1;
+var cropit_loaded=false;
+
+var output_array=[];
+var processing_crop_array=[];
+var processing_crop_allno=0;
+
+function reset_variables()
+{
+    img_orientation=-1;
+    cropit_loaded=false;
+    output_array=[];
+    processing_crop_array=[];
+    processing_crop_allno=0;
+}
+
+
+document.title='document_title';
+var model_name='model_name';
+
+
+function support_format_webp(){var e=document.createElement("canvas");return!(!e.getContext||!e.getContext("2d"))&&0==e.toDataURL("image/webp").indexOf("data:image/webp")}; var support_webp=support_format_webp(); var mine_type='image/png'; if (support_webp) mine_type='image/webp';
+if (document.documentElement.clientWidth > 320) { 
+    var scale_factor=((document.documentElement.clientWidth)/320).toFixed(2).toString();
+    document.querySelector("meta[name=viewport]").setAttribute('content', 'width=320, initial-scale='+scale_factor+', maximum-scale='+scale_factor+',minimum-scale='+scale_factor+',user-scalable=no');
+}
+</script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="  crossorigin="anonymous"></script>
+<script defer src="./ndarray-browser-min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/onnxjs@0.1.8/dist/onnx.min.js"></script>
+
+<script defer src="./cropit.js"></script>
+<script defer src="./dxinfo.js"></script>
+
+<style>
+canvas {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 600;
+}
+
+body{margin:0px;}
+html, body {
+position: fixed;
+width: 100%;
+height: 100%;
+overflow: hidden;
+}
+body {
+overflow-y: scroll;
+-webkit-overflow-scrolling: touch; 
+height: 100%;
+}
+
+.icon_photo { display: inline-block; background: url('./oneicon.jpg') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left;background-position: -70px -253px; width: 60px; height: 68px;}
+
+
+#eula{white-space:pre-wrap;word-wrap:break-word;line-height:25px}#eula,.ct-btn{font-family:inherit}#image-editor{overflow:hidden}#eula{word-wrap:break-word}#eula,a.cbtn{line-height:25px}#cropit-preview-inner{margin:auto;width:250px;display:block}.segment_result{margin:0px;width:320px;display:block}#eula,#segment_eula{margin:auto;width:280px;display:block}#eula,#cropit-preview-inner{text-align:left;font-size:14px;//	overflow-y:scroll;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap}#segment_eula{height:auto;}#sample{height:90px;//	overflow-y:scroll;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap}.blink_me{animation:blinker 2s linear infinite}@keyframes blinker{50%{opacity:0}}input[type=range]{-webkit-appearance:none;padding:8px 5px;background:0 0;transition:border .2s linear,box-shadow .2s linear;width:100%}input[type=range]:active{border-color:rgba(82,168,236,.8);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(82,168,236,.6)}input[type=range]:focus{outline:0}input[type=range]::-webkit-slider-runnable-track{width:240px;height:10px;background:#5bc0de;border:none;border-radius:10px}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;display:block;height:32px;width:32px;border-radius:50%;border:1px solid #ddd;background:#fafafa;cursor:pointer;margin-top:-10px}input[type=range]::-webkit-slider-thumb:hover{background-position:50% 50%}input[type=range]:focus::-webkit-slider-runnable-track{background:#5bc0de}input[type=range]::-moz-range-track{width:240px;height:10px;background:#5bc0de;border:none;border-radius:3px}input[type=range]::-moz-range-thumb{display:block;height:32px;width:32px;border-radius:50%;border:1px solid #ddd;background:#fafafa;cursor:pointer;margin-top:-10px}input[type=range]:-moz-focusring{outline:#fff solid 1px;outline-offset:-1px}input[type=range]::-ms-track{width:240px;height:20px;background:0 0;border-color:transparent;border-width:7px 0;color:transparent}input[type=range]::-ms-fill-lower{background:#5bc0de;border-radius:10px}input[type=range]::-ms-fill-upper{background:#5bc0de;border-radius:10px}input[type=range]::-ms-thumb{height:32px;width:32px;border-radius:50%;border:1px solid #ddd;background:#fafafa}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}.ct-btn{display:inline-block;margin:5px 0;padding:.5em .75em;border-radius:.25em;box-sizing:content-box;-moz-box-sizing:content-box;background:0 0;outline:0;vertical-align:middle;font-size:18px;text-decoration:none;white-space:nowrap;cursor:pointer}.white-image-btn{color:#666;border:1px solid #ebebeb;border-bottom-color:#c6c6c6;box-shadow:0 2px 2px rgba(0,0,0,.04);background:#fff;background:linear-gradient(to bottom,#fff 40%,#f6f6f6 100%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6', GradientType=0 );width:250px;height:40px;margin:0 auto}.cropit-preview{background-color:#f8f8f8;background-size:cover;border:1px solid #ccc;border-radius:10px;margin-top:5px;width:250px;height:250px;text-align:center;vertical-align:middle;display:block;margin-left:auto;margin-right:auto}.cropit-preview-image-container{cursor:move}.cropit-preview-background{opacity:.2}.image-size-label{margin-top:5px}button[type=submit]{margin-top:0}input.cropit-image-zoom-input{position:relative}input.cropit-image-input{display:none}
+.resultdata{padding:0px;}.btn-r{display:inline-block;width:100%;margin:5px 0 5px 0px;border-top:1px solid #DDD;text-align:right;vertical-align:middle;}
+a.cbtn{display:inline-block;height:25px;padding:0 14px;border:1px solid #304a8a;background-color:#3f5a9d;font-size:13px;color:#fff}a.cbtn{width:95px;text-align:center;}.ctxt{color:#666;line-height:25px}a.cbtn:hover{border:1px solid #091940;background-color:#1f326a;color:#fff}#pop-layer{width:310px;height:auto;margin:0 auto;background-color:#fff;border:2px solid #3571B5;z-index:10}#pop-container{padding:5px 5px}
+
+
+.topnavi {
+  overflow: hidden;
+  background-color: #CCCCCC;
+  z-index:2;
+  padding: 10px 10px;
+  width:300px;
+  height:25px;
+  text-align:center;
+}
+.topnavi a {
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  position: relative;
+  padding: 2px 6px;
+  z-index:1;
+}
+
+</style>
+
+
+<script>
+function draw_display(i)
+{
+	imageData=$('#hidden-image-data'+i.toString()).val();
+	if (imageData=="") return;
+
+	var canvas = document.getElementById('cropImg'+i.toString());
+	var ctx=canvas.getContext("2d");ctx.globalAlpha=1.0;
+	var img = new Image();
+	img.onload=function(){
+	ctx.drawImage(img,0,0,250,250);
+	ctx.font="20px Arial";
+	}
+	img.src=imageData;
+	$('#cropImg'+i.toString()).show();
+}
+
+function init_cropit()
+{	
+      cropit_loaded=false;
+	  img_orientation=-1;
+      $(function() {
+        $('#image-editor').cropit({allowDragNDrop: false,imageBackground:true,imageBackgroundBorderWidth: 15,initialZoom:'image',onFileChange:function(){document.querySelector('#cropit-preview-inner').innerHTML = "";},onImageLoaded:function(){
+            
+            document.querySelector('#cropit-preview-inner').innerHTML = '';
+            
+            $('#rotate_button').show();$('#addmore_photos').show();cropit_loaded=true;
+            
+            },onImageError:function(e){dndod_alert(e.message);document.querySelector('#cropit-preview-inner').innerHTML = '';}});
+
+
+        $('.rotate-cw').click(function() {
+          $('#image-editor').cropit('rotateCW');
+		  return false;
+        });
+
+        $('.rotate-ccw').click(function() {
+          $('#image-editor').cropit('rotateCCW');
+		  return false;
+        });
+
+        $('.addmore_photos').click(function() {
+		  AddMore();
+		  return false;
+        });
+
+		var isDragging=false;
+		var startingPos=[];
+		
+		$('.cropit-preview').mousedown(function(evt) {
+			isDragging=false;
+			startingPos=[evt.pageX,evt.pageY];
+		});
+		$('.cropit-preview').mousemove(function(evt) {
+			if (!(evt.pageX==startingPos[0] && evt.pageY==startingPos[1])) {
+			isDragging=true;
+			}
+		});
+		$('.cropit-preview').mouseup(function(evt) {
+		if (isDragging==false)
+		{
+		    $('.cropit-image-input').click();
+		}
+
+		startingPos=[];
+		});
+
+        $('form').submit(function(e) {return submitForm();});
+
+      });
+}
+init_cropit();
+	 
+
+$( document ).ready(function(){
+
+    var win_hash=window.location.hash;
+	var status_skip=true;
+
+	$('.segment_photo').show();
+	$('.segment_eula').hide();
+	$('.segment_result').hide();
+
+	
+	string_eula="<h2>INSTRUCTION MANUAL</h2><p>Please read the notes below carefully before you start.</p><p><strong>Note 1. The lesion must be free of artifacts.</strong></p><p>Please make sure that there is no surrounding artifact. Any artifacts may interfere with the software resulting in an incorrect assessment. Please remove hairs before taking pictures because the hairs around the lesion can make pictures out of focus. </p><p><strong>The list of conditions that cannot be assessed accurately</strong></p><ul><li>mucosal lesion (anus, intraoral, and intraocular lesion)</li><li>lesion on skin folding area and curvatures (e.g. groin, auricular, and periocular lesion; lesion between the fingers and toes)</li><li>lesion covered by a lot of hairs</li></ul><p><strong>The list of artifacts that may impair the assessment</strong></p><ul><li>ruler and marker (e.g. writing instrument)</li><li>sunscreen and lotion</li><li>surrounding multiple other lesions (e.g. other skin spots and nevus) </li><li>injured skin (e.g. ulcers, bleeding, scar)</li><li>tattoo and general objects</li><li>multiple surrounding benign lesions (e.g. nevus) </li><li>finger and any kinds of markers that point at the lesion</li></ul><p><strong>Note 2. Make sure to use the algorithm in a bright place</strong></p><p>When taking an image, we recommend that you take photographs outdoor or in a room with an abundance of natural light for a good quality image.</p><p><strong>Note 3. Make sure the distance, composition, and angle is correct</strong></p><p>Please, keep the phone parallel to the surface of the skin where the nevus is located. Hold the mobile device tight and take a picture about 10-15 cm from the spot.</p><p><strong>Note 4. Upload multiple photographs</strong></p><p>Please, capture 2 ~ 4 photos (max = 5 photos) with slightly different angles and distances. For the rash lesions, please include one photo taken at enough distance to recognize the body site. For the nevus or nodular lesions, only macro-shot image (=close-up photography) is recommended to be submitted.   </p><p><strong>Note 5. Please use the rear camera, not the front camera.</strong></p><p>In most smartphones, the front camera has poor performance, so please use the rear camera.</p><h2>REFERENCE</h2><p style='line-height:12px;word-break: break-all;'><a href='https://doi.org/10.1371/journal.pone.0191493'><sub>Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network, PLOS One, 2018</sub></a></p>";
+	document.getElementById("eula").innerHTML=string_eula;
+	
+
+    if (userLang2 =='ar' || userLang2 =='fa' || userLang2 =='he' || userLang2 =='iw' || userLang2 =='ur' || userLang2 =='yi' || userLang2 =='ji') 
+    {
+        document.body.style.direction = "rtl";
+        document.getElementById("cropit-preview").style.direction = "ltr";
+        document.getElementById("cropit-preview").style.direction = "ltr";
+        document.getElementById("topnavi1").style.textAlign = "right";
+        document.getElementById("topnavi2").style.textAlign = "left";
+    }
+
+
+    document.getElementById("submit_button").disabled = true;
+    //document.getElementById("cropit-preview").disabled = true;
+    document.getElementById("main_footer").innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+    $('#main_footer').show();
+
+     init_onnx().then(_ =>{
+     document.getElementById("notice_footer").innerHTML="";
+     document.getElementById("main_footer").innerHTML='<font color=red>Research Version</font>';
+	 document.getElementById("submit_button").disabled = false;
+     //document.getElementById("cropit-preview").disabled = false;
+     });
+
+})
+
+
+function preprocess(data, width, height) {
+  const dataFromImage = ndarray(new Float32Array(data), [224, 224, 4]);
+  const dataProcessed = ndarray(new Float32Array(224 * 224 * 3), [1, 3, 224, 224]);
+
+  // Realign imageData from [224*224*4] to the correct dimension [1*3*224*224].
+  ndarray.ops.assign(dataProcessed.pick(0, 0, null, null), dataFromImage.pick(null, null, 0));
+  ndarray.ops.assign(dataProcessed.pick(0, 1, null, null), dataFromImage.pick(null, null, 1));
+  ndarray.ops.assign(dataProcessed.pick(0, 2, null, null), dataFromImage.pick(null, null, 2));
+
+  //ndarray.ops.divseq(dataProcessed, 256);
+  ndarray.ops.subseq(dataProcessed.pick(0, 0, null, null), 0.485*256);
+  ndarray.ops.subseq(dataProcessed.pick(0, 1, null, null), 0.456*256);
+  ndarray.ops.subseq(dataProcessed.pick(0, 2, null, null), 0.406*256);
+  ndarray.ops.divseq(dataProcessed.pick(0, 0, null, null), 0.229*256);
+  ndarray.ops.divseq(dataProcessed.pick(0, 1, null, null), 0.224*256);
+  ndarray.ops.divseq(dataProcessed.pick(0, 2, null, null), 0.225*256);
+  
+  return dataProcessed.data;
+}
+
+function offline_model(output_array)
+{
+      document.getElementById("notice_footer").innerHTML="";
+
+	  final_output=[];
+      
+	  for (var i=0;i<output_array[0].length;i++)
+	  {
+            add_=0;
+            for (var j=0;j<output_array.length;j++)
+            {
+                add_+=output_array[j][i];
+            }
+            final_output.push([add_/output_array.length,i]);
+	  }
+      
+  	    final_output=final_output.sort(function(a, b){return b[0] - a[0]});
+				
+
+		temp_string='';
+		accuracy_string='';
+		for (i=0;i<list_dx.length;i++)
+		{
+		
+			dx_title=list_dx[final_output[i][1]];
+			dx_title2=dx_title+' ('+Number((final_output[i][0]).toFixed(2)).toString()+')';
+
+			accuracy_string+='<font color="#007542;">'+(i+1).toString()+'. '+dx_title2+'</font><br>'
+			
+		}
+
+		temp_string='<div id=whichstring></div><div id=accuracy_style1>'+accuracy_string+'</div>';
+		temp_string='<div id="dx_content" style="padding:10px;font-size:20px;line-height:150%;">'+temp_string+'</div>'
+
+        document.querySelector("#resultdata").innerHTML = temp_string;
+
+		$('#accuracy_style1').show();
+		$('#whichstring').show();
+		$('#div_cropimg').show();
+	    $('#resultdata').show();
+		  
+		$('.segment_eula').hide();
+		$('.segment_photo').hide();
+		$('.segment_result').show();
+	  
+}
+
+function softmax(arr) {    return arr.map(function(value,index) {       return Math.exp(value) / arr.map( function(y /*value*/){ return Math.exp(y) } ).reduce( function(a,b){ return a+b })   })    }  
+
+async function run_onnx(img_data)
+{
+	  // preprocess the image data to match input dimension requirement, which is 1*3*224*224
+	  const preprocessedData = preprocess(img_data, 224, 224);
+	  const inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
+      
+	  // Run model with Tensor inputs and get the result.
+	  const outputMap = await onnx_session.run([inputTensor]);
+	  const outputData = outputMap.values().next().value;
+
+	  return softmax(outputData.data);
+}
+
+
+function run_processing_crop(crop_index,no_)
+{
+      document.getElementById("notice_footer").innerHTML="" + (total_analyze_crop_no-crop_index).toString() + " / " + processing_crop_allno.toString() +' <i class="fas fa-spinner fa-spin"></i>';
+
+      run_onnx(processing_crop_array[no_]).then((output_) =>{
+            
+            output_array.push(output_);
+            if (no_==(total_analyze_crop_no-1))
+            {
+                if ($('#hidden-image-data'+(crop_index-1).toString()).val()!="")
+                {
+                    if (crop_index==0)
+                    {
+                    offline_model(output_array);
+                    }
+                    else
+                    run_offline(crop_index-1);
+                }
+                else
+                {
+                    offline_model(output_array);
+                }
+            }
+            else
+            {
+                if (no_<(total_analyze_crop_no-1))
+                {
+                    setTimeout(function(){run_processing_crop(crop_index,no_+1);},10);
+                    //run_processing_crop(crop_index,no_+1);
+                }
+            }
+            
+            
+      });
+      
+}
+
+async function init_onnx()
+{
+onnx_session = new onnx.InferenceSession({ backendHint: 'webgl' });
+await onnx_session.loadModel("model.onnx");
+
+
+const dims = [1, 3, 224, 224];
+const size = dims[0] * dims[1] * dims[2] * dims[3];
+const inputData = Float32Array.from({ length: size }, () => Math.random());
+
+const preprocessedData = preprocess(inputData, 224, 224);
+const inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
+// Run model with Tensor inputs and get the result.
+const outputMap = await onnx_session.run([inputTensor]);
+
+}
+
+function submitForm()
+{
+	if (old_html!='')
+	{
+		var imageData = $('#image-editor').cropit('export',{type: mine_type,quality: 1.0,originalSize: false});
+		if (imageData!="" && typeof imageData!="undefined" && imageData!=null)
+		{
+			AddMore_delay2(imageData);
+		}
+	}
+
+     processing_crop_allno=0;
+      for (var kkk=0;kkk<5;kkk++)
+      {
+          imageData=$('#hidden-image-data'+kkk.toString()).val();
+	      if (imageData!="" && typeof imageData!="undefined" && imageData!=null)
+		  {
+			processing_crop_allno++;
+		  }
+      }
+
+   document.getElementById("notice_footer").innerHTML="" + (0).toString() + " / " + processing_crop_allno.toString()  +' <i class="fas fa-spinner fa-spin"></i>';
+   setTimeout(function(){run_offline(4);},10);
+  
+   return false;
+}
+
+
+function run_offline(crop_index)
+{
+	var myCanvas_224 = document.getElementById('img_224');
+	var ctx_224 = myCanvas_224.getContext('2d');
+
+	var img = new Image;
+	img.onload = function(){
+		ctx_224.drawImage(img,0,0,img.width,img.height,0,0,224,224);
+        processing_crop_array=[];
+        processing_crop_array.push(ctx_224.getImageData(0, 0, 224, 224).data);
+        run_processing_crop(crop_index,0);
+   	    draw_display_all(crop_index);
+	};
+	img.src = $('#hidden-image-data'+crop_index.toString()).val();
+}
+
+
+function draw_display_all(iProcess)
+{
+	imageData=$('#hidden-image-data'+iProcess.toString()).val();
+
+    if (imageData=="" || typeof imageData=="undefined" || imageData==null)
+    {
+        if (iProcess < 5)
+        {
+            iProcess+=1;
+            draw_display_all(iProcess);
+        }
+        return;
+    }
+	var canvas = document.getElementById('cropImg'+iProcess.toString());
+	var ctx=canvas.getContext("2d");ctx.globalAlpha=1.0;
+	var img = new Image();
+    img.onload=function(){
+        ctx.drawImage(img,0,0,250,250);
+        ctx.font="20px Arial";
+        if (iProcess < 5)
+        {
+            iProcess+=1;
+            draw_display_all(iProcess);
+        }
+	}
+	img.src=imageData;
+	$('#cropImg'+iProcess.toString()).show();
+}
+
+
+function RemoveArray(k){
+	for (var i=k;i>0;i--)
+	{
+        $('#hidden-image-data'+i.toString()).val($('#hidden-image-data'+(i-1).toString()).val());
+    }
+    $('#hidden-image-data0').val(null);
+    
+    draw_index_all();
+}
+
+function draw_index_all()
+{
+	for (var i=0;i<5;i++)
+	{
+        if ($('#hidden-image-data'+i.toString()).val()!=null && typeof $('#hidden-image-data'+i.toString()).val()!="undefined" && $('#hidden-image-data'+i.toString()).val()!="")
+        {
+            draw_index(i);
+        }
+        else
+        {
+			$('#hidden-image-data'+i.toString()).val(null);
+			$('#cropImg_preload'+i.toString()).hide();
+			continue;
+        }
+	}
+}    
+
+function draw_index(i)
+{
+	var canvas = document.getElementById('cropImg_preload'+i.toString());
+	var ctx=canvas.getContext("2d");ctx.globalAlpha=1.0;
+	var img = new Image();
+	img.onload=function(){
+	ctx.drawImage(img,0,0,100,100);
+
+    document.fonts.ready.then(_ => {
+      ctx.font = '600 20px "Font Awesome 5 Free"';
+      setTimeout(_ => ctx.fillText("\uF2ED",3,20),200);
+    });
+      
+	}
+
+	img.src=$('#hidden-image-data'+i.toString()).val();
+	$('#cropImg_preload'+i.toString()).show();
+}
+
+
+function gohome()
+{
+//setTimeout("location.href='#skip';window.location.reload();", 0);
+reinitiate();
+}
+
+
+function AddMore(){
+document.getElementById("submit_button").disabled = true;
+document.querySelector('#cropit-preview-inner').innerHTML = "";            
+document.getElementById("main_footer").innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+setTimeout(function(){AddMore_delay();}, 0);
+}
+
+
+function AddMore_delay2(imageData){
+	$(".segment_photo").html(old_html);
+
+	for (var i=1;i<4;i++)
+	{
+		$('#hidden-image-data'+i.toString()).val($('#hidden-image-data'+(i+1).toString()).val());
+	}
+	$('#hidden-image-data4').val(imageData);
+	$('#hidden-image-data0').val(null);
+
+
+	draw_index_all();
+	init_cropit();
+	document.querySelector('#cropit-preview-inner').innerHTML = "";
+    document.getElementById("main_footer").innerHTML='';
+
+    document.getElementById("submit_button").disabled = false;
+    return false;
+}
+
+function AddMore_delay(){
+
+var imageData = $('#image-editor').cropit('export',{type: mine_type,quality: 1.0,originalSize: false});
+return AddMore_delay2(imageData);
+
+};
+
+function reinitiate()
+{
+    $('#div_cropimg').hide();
+    $('#accuracy_style1').hide();
+    $('#whichstring').hide();
+    $('#accuracy_style_new').hide();
+
+	if (old_html!='') $(".segment_photo").html(old_html);
+
+	$('#hidden-image-data0').val(null);
+	$('#hidden-image-data1').val(null);
+	$('#hidden-image-data2').val(null);
+	$('#hidden-image-data3').val(null);
+	$('#hidden-image-data4').val(null);
+
+	draw_index_all();
+	init_cropit();
+	document.querySelector('#cropit-preview-inner').innerHTML = "";
+
+    $(".segment_photo").show();
+    $('.segment_result').hide();
+    $('.segment_eula').hide();
+
+    reset_variables();
+
+}
+
+function show_eula()
+{
+	$('.segment_eula').show();
+	$('.segment_result').hide();
+	$('.segment_photo').hide();
+}
+</script>
+
+
+<script async type="text/javascript">
+var userLang = navigator.language || navigator.userLanguage; 
+userLang2='en';
+if (userLang.length>=2) userLang2=userLang.substr(0,2);
+</script>
+
+
+</head>
+
+<body style="background-color:white;">
+
+<div id='top_container' style='display:flex;justify-content:left;align-items:left;'>
+<script>
+if (document.documentElement.clientWidth >500) { 
+document.getElementById('top_container').setAttribute("style", "display:flex;justify-content:center;align-items:center;");
+}
+</script>
+
+
+<div style='display:inline-block;width:320px;'>
+
+<div class="topnavi" id="topnavi">
+  <div id='topnavi1' style='text-align:left;display:inline;margin:0px;padding:1 0 0 0px;width:150px;display:inline-block;height:22px;vertical-align:middle;margin-top:2px;'>
+  <a href="javascript:gohome();" id='link_home'> <i class="fas fa-home"></i></a>
+  </div>
+  <div id='topnavi2' style='text-align:right;display:inline;margin:0px;padding:0px;width:140px;display:inline-block;height:22px;vertical-align:middle;'>
+  <a href='#' onclick='show_eula();' id='link_info'> <i class="fas fa-info-circle"></i></a>
+  </div>
+</div>
+
+
+<div id="segment_text">
+<div id="segment_eula" class="segment_eula">
+<div id="eula">
+</div>
+</div>
+
+<div name="segment_result" class="segment_result" style='display:none;'>
+<div id='pop-layer'>
+<div id='pop-container'>
+<!--// content-->
+
+<div id='div_cropimg' align=center style='display:none;'>
+<canvas id='cropImg0' style='display:none;border-radius: 10%;' width=250 height=250></canvas>
+<canvas id='cropImg1' style='display:none;border-radius: 10%;' width=250 height=250></canvas>
+<canvas id='cropImg2' style='display:none;border-radius: 10%;' width=250 height=250></canvas>
+<canvas id='cropImg3' style='display:none;border-radius: 10%;' width=250 height=250></canvas>
+<canvas id='cropImg4' style='display:none;border-radius: 10%;' width=250 height=250></canvas>
+</div>
+
+<div id='resultdata' class='resultdata'>
+<p class="ctxt mb20">
+</p>
+</div>
+
+<div class="btn-r">
+<a href="#" class="cbtn" onclick="gohome();" ><div id='str_close'>Close</div></a>
+</div>
+<!--// content-->
+</div>
+</div>
+</div>
+
+
+
+<div name="segment_photo" class="segment_photo" style='display:none;'>
+    <div class="image-editor" id="image-editor" align=center>
+	<canvas id='cropImg_preload0' onclick="RemoveArray(0);" style='display:none;' width=100 height=100></canvas>
+	<canvas id='cropImg_preload1' onclick="RemoveArray(1);" style='display:none;' width=100 height=100></canvas>
+	<canvas id='cropImg_preload2' onclick="RemoveArray(2);" style='display:none;' width=100 height=100></canvas>
+	<canvas id='cropImg_preload3' onclick="RemoveArray(3);" style='display:none;' width=100 height=100></canvas>
+	<canvas id='cropImg_preload4' onclick="RemoveArray(4);" style='display:none;' width=100 height=100></canvas>
+
+	<input id="fileinput" onclick='old_html=$(".segment_photo").html();' name="file" type="file" class="cropit-image-input">
+ 
+ 
+    <form action="" id="main_form" method="post" enctype="multipart/form-data">
+    <input name="args1" id="args1" type="hidden" class="args1" value="">
+    <input name="args2" id="args2" type="hidden" class="args2" value="">
+    <input type="hidden" name="base64file" id="hidden-image-data0" />
+    <input type="hidden" name="base64file" id="hidden-image-data1" />
+    <input type="hidden" name="base64file" id="hidden-image-data2" />
+    <input type="hidden" name="base64file" id="hidden-image-data3" />
+    <input type="hidden" name="base64file" id="hidden-image-data4" />
+
+    <div class="cropit-preview" id="cropit-preview"><table style="width:100%;height:100%;"><tr><td style="text-align:center;vertical-align:middle"><div id="icon_blink" class="icon_photo blink_me" ></div></td></tr></table></div>
+    <div  id="cropit-preview-inner"></div>
+    <table style="width:250px;height:70px;margin-left:-10px;"><tr><td><input type="range" class="cropit-image-zoom-input"></td></tr></table>
+	
+	<table><tr><td>
+    <button class="white-image-btn rotate-cw" id='rotate_button' style='width:122px;display:none;'><div class="icon3"></div></button>
+	</td><td>
+	<button class="white-image-btn addmore_photos" id='addmore_photos' style='width:122px;display:none;'><div id="str_add">Add</div></button>
+	</td></tr></table>
+
+    <button class="white-image-btn" id="submit_button"><div id="str_submit">Submit</div></button>
+    </form>
+    <br>
+	
+	</div>
+
+	</div>
+	
+	  
+
+<sub><div id='main_footer' align=center style='display:none;'></div></sub>
+<div id='notice_footer' align=center ></div>
+
+<canvas id='img_224' width=256 height=256 style='display:none;'></canvas>
+
+</div> <!-- SEG TEXT-->
+
+</div>
+</div>
+
+
+</body>
+
+</html>
