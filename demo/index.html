@@ -185,11 +185,9 @@ $( document ).ready(function(){
 	$('.segment_eula').hide();
 	$('.segment_result').hide();
 
-	
 	string_eula="<h2>INSTRUCTION MANUAL</h2><p>Please read the notes below carefully before you start.</p><p><strong>Note 1. The lesion must be free of artifacts.</strong></p><p>Please make sure that there is no surrounding artifact. Any artifacts may interfere with the software resulting in an incorrect assessment. Please remove hairs before taking pictures because the hairs around the lesion can make pictures out of focus. </p><p><strong>The list of conditions that cannot be assessed accurately</strong></p><ul><li>mucosal lesion (anus, intraoral, and intraocular lesion)</li><li>lesion on skin folding area and curvatures (e.g. groin, auricular, and periocular lesion; lesion between the fingers and toes)</li><li>lesion covered by a lot of hairs</li></ul><p><strong>The list of artifacts that may impair the assessment</strong></p><ul><li>ruler and marker (e.g. writing instrument)</li><li>sunscreen and lotion</li><li>surrounding multiple other lesions (e.g. other skin spots and nevus) </li><li>injured skin (e.g. ulcers, bleeding, scar)</li><li>tattoo and general objects</li><li>multiple surrounding benign lesions (e.g. nevus) </li><li>finger and any kinds of markers that point at the lesion</li></ul><p><strong>Note 2. Make sure to use the algorithm in a bright place</strong></p><p>When taking an image, we recommend that you take photographs outdoor or in a room with an abundance of natural light for a good quality image.</p><p><strong>Note 3. Make sure the distance, composition, and angle is correct</strong></p><p>Please, keep the phone parallel to the surface of the skin where the nevus is located. Hold the mobile device tight and take a picture about 10-15 cm from the spot.</p><p><strong>Note 4. Upload multiple photographs</strong></p><p>Please, capture 2 ~ 4 photos (max = 5 photos) with slightly different angles and distances. For the rash lesions, please include one photo taken at enough distance to recognize the body site. For the nevus or nodular lesions, only macro-shot image (=close-up photography) is recommended to be submitted.   </p><p><strong>Note 5. Please use the rear camera, not the front camera.</strong></p><p>In most smartphones, the front camera has poor performance, so please use the rear camera.</p><h2>REFERENCE</h2><p style='line-height:12px;word-break: break-all;'><a href='https://doi.org/10.1371/journal.pone.0191493'><sub>Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network, PLOS One, 2018</sub></a></p>";
 	document.getElementById("eula").innerHTML=string_eula;
 	
-
     if (userLang2 =='ar' || userLang2 =='fa' || userLang2 =='he' || userLang2 =='iw' || userLang2 =='ur' || userLang2 =='yi' || userLang2 =='ji') 
     {
         document.body.style.direction = "rtl";
@@ -198,7 +196,6 @@ $( document ).ready(function(){
         document.getElementById("topnavi1").style.textAlign = "right";
         document.getElementById("topnavi2").style.textAlign = "left";
     }
-
 
     document.getElementById("submit_button").disabled = true;
     //document.getElementById("cropit-preview").disabled = true;
@@ -341,7 +338,6 @@ function run_processing_crop(crop_index,no_)
                     setTimeout(function(){
                     run_processing_crop(crop_index,no_+1);
                     },10);
-                    //run_processing_crop(crop_index,no_+1);
                 }
             }
             
@@ -352,23 +348,25 @@ function run_processing_crop(crop_index,no_)
 
 async function init_onnx()
 {
+	dims = [1, 3, 224, 224];
+	size = dims[0] * dims[1] * dims[2] * dims[3];
+	inputData = Float32Array.from({ length: size }, () => Math.random());
+
+	preprocessedData = preprocess(inputData, 224, 224);
+	inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
+
     for (i=0;i<cnn_list.length;i++)
     {
-    cnn_name=cnn_list[i];
+		cnn_name=cnn_list[i];
 
-    console.log("Loading Start : ",cnn_name);
-    onnx_session[cnn_name] = new onnx.InferenceSession({ backendHint: 'webgl' });
-    await onnx_session[cnn_name].loadModel(cnn_name);
-
-    dims = [1, 3, 224, 224];
-    size = dims[0] * dims[1] * dims[2] * dims[3];
-    inputData = Float32Array.from({ length: size }, () => Math.random());
-
-    preprocessedData = preprocess(inputData, 224, 224);
-    inputTensor = new onnx.Tensor(preprocessedData, 'float32', [1, 3, 224, 224]);
-    outputMap = await onnx_session[cnn_name].run([inputTensor]);
-    
-    console.log("Loading End : ",cnn_name);
+		console.log("Loading Start : ",cnn_name);
+		
+		onnx_session[cnn_name] = new onnx.InferenceSession({ backendHint: 'webgl' });
+		await onnx_session[cnn_name].loadModel(cnn_name);
+		
+		outputMap = await onnx_session[cnn_name].run([inputTensor]);
+		
+		console.log("Loading End : ",cnn_name);
     }
 
 }
@@ -672,7 +670,7 @@ document.getElementById('top_container').setAttribute("style", "display:flex;jus
 
     <button class="white-image-btn" id="submit_button"><div id="str_submit">Submit</div></button>
     </form>
-    <br> 
+    <br>
 	
 	</div>
 
