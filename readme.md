@@ -5,10 +5,9 @@
 A simple script implementing the training CNN (Pytorch) and deployment on the WWW (ONNX.js).
 
 
-## Runtime System Requirements
-Windows 10
-
-CPU processors
+### Runtime System Requirements
+- Windows 10
+- CPU processors
 
 
 ### Supported CNN
