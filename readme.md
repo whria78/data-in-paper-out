@@ -52,3 +52,4 @@ Onychomycosis dataset came from the following paper.
 Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network, PLOS One 2018
 
 https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0191493
+https://figshare.com/articles/dataset/Model_Onychomycosis_Training_Datasets_JPG_thumbnails_and_Validation_Datasets_JPG_images_/5398573?file=9302506
