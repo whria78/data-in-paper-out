@@ -45,7 +45,8 @@ The default DEMO shows the result of ensemble of efficientnet (/demo/model_eff_3
 ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/6.PNG?raw=true)
 
 
-__Note__
+> __Note__
+Onychomycosis dataset came from the following paper.
 
 Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network, PLOS One 2018
 
