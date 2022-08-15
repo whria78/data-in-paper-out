@@ -86,6 +86,7 @@ def main():
     try:os.makedirs(os.path.dirname(save_path))
     except:pass
     
+
     save_string="list_dx=["
     for classname in train_dataset.classes:
         save_string+='"%s",' % (classname)
@@ -94,8 +95,9 @@ def main():
 
     f=open(save_path,'w')
     f.write(save_string)
+    f.write("cnn_list=['%s.onnx'];" % (args.model))
     f.close()
-    print("List of disease classes is saved to : ", save_path)
+    print("Dx Classes and Model Info are saved to : ", save_path)
 
 
     #choose model to train
@@ -284,7 +286,7 @@ def main():
         
 
     model.eval()
-    save_path=os.path.join(os.getcwd(),'demo','model.onnx')
+    save_path=os.path.join(os.getcwd(),'demo','%s.onnx' % (args.model))
     try:os.makedirs(os.path.dirname(save_path))
     except:pass
 
