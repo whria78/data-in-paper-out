@@ -37,6 +37,7 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/5.PNG?raw=true)
 
 > python demo.py
+
 > xdg-open http://127.0.0.1:8000
 
 ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/6.PNG?raw=true)
