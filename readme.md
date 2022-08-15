@@ -1,4 +1,4 @@
-A simple script implementing the training CNN (Pytorch) and deployment on the WWW (ONNX.js).
+Training CNN (Pytorch) and Deployment on the WWW (ONNX.js) on Windows (CPU)
 
 
 ### Requirements
@@ -45,7 +45,7 @@ The default DEMO shows the result of ensemble of efficientnet (/demo/model_eff_3
 ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/6.PNG?raw=true)
 
 
-## Dataset
+> __Note__
 
 Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network, PLOS One 2018
 
