@@ -29,7 +29,7 @@ A simple script implementing the training CNN (Pytorch) and deployment on the WW
 
 ## Screenshot
 
-The default DEMO shows the result of ensemble of efficientnet (/demo/model_eff_30e_0.onnx) and mobilenet (/demo/model_mob_30e_0.onnx). If you want to add more models, please check /demo/dxinfo.js
+The default DEMO shows the result of ensemble of efficientnet (/demo/model_eff_30e_0.onnx) and mobilenet (/demo/model_mob_30e_0.onnx). If you want to change or add more models, please check (/demo/dxinfo.js)
 
 ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/1.JPG?raw=true)
 ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/2.JPG?raw=true)
