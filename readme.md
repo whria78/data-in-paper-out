@@ -1,4 +1,4 @@
-Training CNN (Pytorch) and Deployment on the WWW (ONNX.js) on Windows (CPU)
+Training CNN (Pytorch) and Deployment on the WWW (ONNX)
 
 
 ### Requirements
