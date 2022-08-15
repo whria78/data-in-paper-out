@@ -368,7 +368,7 @@ async function init_onnx()
 
 		console.log("Loading Start : ",cnn_name);
 		
-		onnx_session[cnn_name] = new onnx.InferenceSession({ backendHint: 'webgl' });
+		onnx_session[cnn_name] = new onnx.InferenceSession();
 		await onnx_session[cnn_name].loadModel(cnn_name);
 		
 		outputMap = await onnx_session[cnn_name].run([inputTensor]);
