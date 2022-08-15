@@ -5,6 +5,12 @@ Training CNN (Pytorch) and Deployment on the WWW (ONNX.js) on Windows (CPU)
 - Windows (or Linux)
 - CPU processor (or GPU, CUDA)
 
+
+### Supported CNN
+- MobileNet v2
+- EfficientNet Lite
+
+
 ### How to
 - Download the code (ZIP)
     ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/00.PNG?raw=true)
@@ -31,11 +37,6 @@ Training CNN (Pytorch) and Deployment on the WWW (ONNX.js) on Windows (CPU)
     Run "1. train_mobilenet.bat" if you want to train a CNN (MobileNet).
 
     Run "2. run_demo_server.bat", and then "3. connect_demo_server.bat", to check the customized DEMO.
-
-### Supported CNN
-- MobileNet v2
-- EfficientNet Lite
-
 
 ## Screenshot
 
