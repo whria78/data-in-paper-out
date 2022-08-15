@@ -64,5 +64,6 @@ Deep neural networks show an equivalent and often superior performance to dermat
 
 Paper : 
 https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0191493
+
 Dataset : 
 https://figshare.com/articles/dataset/Model_Onychomycosis_Training_Datasets_JPG_thumbnails_and_Validation_Datasets_JPG_images_/5398573?file=9302506
