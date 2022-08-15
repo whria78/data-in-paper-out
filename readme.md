@@ -18,14 +18,17 @@ Training CNN (Pytorch) and Deployment on the WWW (ONNX.js) on Windows (CPU)
 	
 	![img](https://github.com/whria78/modelderm_rcnn_api/raw/master/img/ana2.PNG)
 
-Check the pretrained DEMO
-- Run "0. requirement.bat" to install the required libraries.
-    ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/00-1.PNG?raw=true)
-- Run "2. run_demo_server.bat", and then "3. connect_demo_server.bat", to check the default DEMO.
+- Check the pretrained DEMO
+    Run "0. requirement.bat" to install the required libraries.
 
-Train a custom model and try the DEMO
-- Run "1. train_mobilenet.bat" if you want to train a CNN (MobileNet).
-- Run "2. run_demo_server.bat", and then "3. connect_demo_server.bat", to check the customized DEMO.
+    ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/00-1.PNG?raw=true)
+
+    Run "2. run_demo_server.bat", and then "3. connect_demo_server.bat", to check the default DEMO.
+
+- Train a custom model and try the DEMO
+    Run "1. train_mobilenet.bat" if you want to train a CNN (MobileNet).
+
+    Run "2. run_demo_server.bat", and then "3. connect_demo_server.bat", to check the customized DEMO.
 
 ### Supported CNN
 - MobileNet v2
