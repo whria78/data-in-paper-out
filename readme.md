@@ -56,6 +56,13 @@ The default DEMO shows the result of ensemble of efficientnet (/demo/model_eff_3
 ![img](https://github.com/whria78/data-in-paper-out/blob/main/screenshot/6.PNG?raw=true)
 
 
+## WWW DEMO
+
+The DEMO can be hosted on the WWW. Here is a web DEMO hosted by the github.
+
+https://whria78.github.io/demo_onychomycosis/#
+
+
 ## Dataset
 
 Onychomycosis dataset came from the following paper.
