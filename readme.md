@@ -65,15 +65,16 @@ https://whria78.github.io/demo_onychomycosis/#
 
 ## Dataset
 
-Onychomycosis dataset came from the following paper.
+(A) Onychomycosis dataset came from the following paper.
 
 Deep neural networks show an equivalent and often superior performance to dermatologists in onychomycosis diagnosis: Automatic construction of onychomycosis datasets by region-based convolutional deep neural network, PLOS One 2018
-
-Clinical photographs of melanoma and nevus are available in the following link (CAN4000 dataset).
-https://github.com/whria78/can
 
 Paper : 
 https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0191493
 
 Dataset : 
 https://figshare.com/articles/dataset/Model_Onychomycosis_Training_Datasets_JPG_thumbnails_and_Validation_Datasets_JPG_images_/5398573?file=9302506
+
+
+(B) Clinical photographs of melanoma and nevus are available in the following link (CAN4000 dataset).
+https://github.com/whria78/can
