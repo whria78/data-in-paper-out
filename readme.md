@@ -76,6 +76,6 @@ Dataset :
 https://figshare.com/articles/dataset/Model_Onychomycosis_Training_Datasets_JPG_thumbnails_and_Validation_Datasets_JPG_images_/5398573?file=9302506
 
 
-(B) Clinical photographs of melanoma and nevus are available in the following link (CAN4000 dataset).
+(B) Clinical photographs of melanoma and nevus are available in the following link (CAN5600 dataset).
 
 https://github.com/whria78/can
