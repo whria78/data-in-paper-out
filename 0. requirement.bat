@@ -1,1 +1,1 @@
-pip install torch torchvision numpy timm sklearn openpyxl
+pip install torch torchvision numpy timm scikit-learn openpyxl
